@@ -43,58 +43,57 @@ import com.qualcomm.robotcore.util.Range;
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
  * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
- *
+ * <p>
  * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
  * It includes all the skeletal structure that all linear OpModes contain.
- *
+ * <p>
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Forward", group="Linear Opmode")
+@Autonomous(name = "Forward", group = "Linear Opmode")
 @Disabled
-public class Forward extends LinearOpMode {
+public class Forward extends LinearOpMode
+{
 
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+	DcMotor leftDrive;
+	DcMotor rightDrive;
+	double power = 0.5;
+	// private DcMotor leftDrive = null;
+	// private DcMotor rightDrive = null;
+	// Declare OpMode members.
+	private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor leftDrive;
-    DcMotor rightDrive;
-   // private DcMotor leftDrive = null;
-   // private DcMotor rightDrive = null;
+	@Override
+	public void runOpMode()
+	{
+		telemetry.addData("Status", "Initialized");
+		telemetry.update();
 
-    double power = 0.5;
+		//Motors have been classified here
+		leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
+		rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
-    @Override
-    public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
+		// Most robots need the motor on one side to be reversed to drive forward
+		// Reverse the motor that runs backwards when connected directly to the battery
+		leftDrive.setDirection(DcMotor.Direction.FORWARD);
+		rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        //Motors have been classified here
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+		// Wait for the game to start (driver presses PLAY)
+		waitForStart();
+		runtime.reset();
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+		leftDrive.setPower(power);
+		rightDrive.setPower(power);
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        runtime.reset();
+		//Robot will continue driving forward for the duration of 3000 ms
+		sleep(3000);
 
-        leftDrive.setPower(power);
-        rightDrive.setPower(power);
+		power = 0.0;
 
-        //Robot will continue driving forward for the duration of 3000 ms
-        sleep(3000);
+		//This reassigns the power
+		leftDrive.setPower(power);
+		rightDrive.setPower(power);
 
-        power = 0.0;
-
-        //This reassigns the power
-        leftDrive.setPower(power);
-        rightDrive.setPower(power);
-
-        }
-    }
+	}
 }
