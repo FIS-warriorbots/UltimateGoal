@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -45,7 +46,7 @@ public class MecanumDemo extends OpMode
 		rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFrontMotor");
 		rightBackMotor = hardwareMap.get(DcMotor.class, "rightBackMotor");
 
-		leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+		leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
 		leftBackMotor.setDirection(DcMotor.Direction.FORWARD);
 		rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
 		rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -67,14 +68,14 @@ public class MecanumDemo extends OpMode
 		//Robot will continue driving forward for the duration of 3000 ms
 //		sleep(3000);
 
-		double horizontal = -gamepad1.left_stick_x;
-		double vertical = gamepad1.left_stick_y;
+		double horizontal = gamepad1.left_stick_x;
+		double vertical = -gamepad1.left_stick_y;
 		double twist = 0;
 
 		// You may need to multiply some of these by -1 to invert direction of
 		// the motor.  This is not an issue with the calculations themselves.
 		double[] speeds = {
-				-(vertical + horizontal + twist),
+				(vertical + horizontal + twist),
 				(vertical - horizontal - twist),
 				(vertical - horizontal + twist),
 				(vertical + horizontal - twist)
