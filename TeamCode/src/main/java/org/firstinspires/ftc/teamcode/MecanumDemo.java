@@ -70,7 +70,7 @@ public class MecanumDemo extends OpMode
 
 		double horizontal = gamepad1.left_stick_x;
 		double vertical = -gamepad1.left_stick_y;
-		double twist = 0;
+		double twist = gamepad1.right_trigger - gamepad1.left_trigger;
 
 		// You may need to multiply some of these by -1 to invert direction of
 		// the motor.  This is not an issue with the calculations themselves.
