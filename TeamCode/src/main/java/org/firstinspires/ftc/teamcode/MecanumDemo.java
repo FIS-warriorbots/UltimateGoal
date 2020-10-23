@@ -76,9 +76,9 @@ public class MecanumDemo extends OpMode
 		// the motor.  This is not an issue with the calculations themselves.
 		double[] speeds = {
 				(vertical + horizontal + twist),
-				(vertical - horizontal - twist),
+				(vertical + horizontal - twist),
 				(vertical - horizontal + twist),
-				(vertical + horizontal - twist)
+				(vertical - horizontal - twist),
 		};
 
 		// Because we are adding vectors and motors only take values between
